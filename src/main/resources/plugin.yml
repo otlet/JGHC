@@ -1,0 +1,24 @@
+name: JestemGraczem
+description: Oficjalny plugin serwerow JestemGraczem.pl
+version: '1.0-ALPHA'
+main: com.idkcloud.JestemGraczem.JestemGraczem
+author: otlet
+website: idkcloud.com
+api-version: '1.14'
+depend:
+  - WorldEdit
+  - WorldGuard
+  - WorldGuardEvents
+  - Vault
+commands:
+  setdeathspawn:
+    description: Set Death Spawn
+    aliases:
+      - setdeathjail
+    permission: jg.setdeathspawn
+    permission-message: Tylko KRUL KORWIN moze ustawic deathspawn!
+    usage: /setdeathspawn
+permissions:
+  jg.admin:
+    description: Komendy admendy!
+    default: op
