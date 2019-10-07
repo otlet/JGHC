@@ -47,7 +47,7 @@ public class RandomTeleport implements CommandExecutor {
 
                 while (Z > 0) {
                     Location location = new Location(player.getWorld(), X, Y, Z);
-                    if (avoid.contains(location.getBlock().getType().name()))
+                    if (!avoid.contains(location.getBlock().getType().name()))
                         break;
                     Z--;
                 }
