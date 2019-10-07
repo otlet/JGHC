@@ -1,6 +1,6 @@
 name: JestemGraczem
 description: Oficjalny plugin serwerow JestemGraczem.pl
-version: '1.0-ALPHA'
+version: '0.2'
 main: com.idkcloud.JestemGraczem.JestemGraczem
 author: otlet
 website: idkcloud.com
@@ -18,7 +18,18 @@ commands:
     permission: jg.setdeathspawn
     permission-message: Tylko KRUL KORWIN moze ustawic deathspawn!
     usage: /setdeathspawn
+  randomtp:
+    description: Use Random Teleportation
+    aliases:
+      - rtp
+      - wild
+    permission: jg.randomtp
+    permission-message: Nie umiesz w teleportację!
+    usage: /randomtp
 permissions:
   jg.admin:
+    description: Komendy admendy!
+    default: op
+  jg.randomtp:
     description: Komendy admendy!
     default: op

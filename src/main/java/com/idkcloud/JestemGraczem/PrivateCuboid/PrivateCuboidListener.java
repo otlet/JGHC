@@ -17,7 +17,7 @@ public class PrivateCuboidListener implements Listener {
             return;
         }
 
-        if (event.getRegion().getOwners().contains(event.getUUID())) {
+        if (event.getRegion().getOwners().contains(event.getUUID()) && !main.perms.has(p, "essentials.fly")) {
             main.perms.playerAdd(p, "essentials.fly");
         }
     }
@@ -30,6 +30,7 @@ public class PrivateCuboidListener implements Listener {
         }
 
         p.setFlying(false);
-        main.perms.playerRemove(p, "essentials.fly");
+        if (main.perms.has(p, "essentials.fly"))
+            main.perms.playerRemove(p, "essentials.fly");
     }
 }
