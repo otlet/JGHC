@@ -1,23 +1,24 @@
 package com.idkcloud.JestemGraczem;
 
+import com.idkcloud.JestemGraczem.Alcoholism.AlcoholismConfig;
+import com.idkcloud.JestemGraczem.Alcoholism.AlcoholismListener;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawn;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
-//import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.Objects;
+//import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
 
 public class JestemGraczem extends JavaPlugin implements Listener {
     public Permission perms;
+    public AlcoholismConfig alcoholismConfig;
 
     @Override
     public void onEnable() {
         // Rejestracja pluginu
-        getLogger().info("JestemGraczem.pl Wersja: " + getDescription().getVersion());
         getServer().getPluginManager().registerEvents(this, this);
 
         // Tryb debugowania, może kiedyś
@@ -31,6 +32,10 @@ public class JestemGraczem extends JavaPlugin implements Listener {
         // Dodanie funkcjonalności z paczki DeathSpawn
         this.getCommand("setdeathspawn").setExecutor(new DeathSpawn());
         getServer().getPluginManager().registerEvents(new DeathSpawnListener(), this);
+
+        // Dodanie alkoholu
+//        alcoholismConfig = new AlcoholismConfig();
+        getServer().getPluginManager().registerEvents(new AlcoholismListener(), this);
 
         // Dodanie RandomTP
         this.getCommand("randomtp").setExecutor(new RandomTeleport());
