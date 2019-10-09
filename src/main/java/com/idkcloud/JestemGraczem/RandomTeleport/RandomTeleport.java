@@ -25,9 +25,7 @@ public class RandomTeleport implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
         // Sprawdzenie, czy RTP jest włączone w konfiguracji
-        if (!main.getConfig().getBoolean("RandomTeleport.Activate")) {
-            String message = "Random Teleport jest wyłączony!";
-            sender.sendMessage(message);
+        if (!isTeleportationActivated(sender)) {
             return false;
         }
 
@@ -38,18 +36,13 @@ public class RandomTeleport implements CommandExecutor {
         Player player = (Player) sender;
 
         //Czy gracz już jest w pamięci cooldowna
-        if (cooldowns.containsKey(player.getName())) {
-            //Jeśli tak, to czy jego cooldown już minął.
-            if (cooldowns.get(player.getName()) - System.currentTimeMillis() * 1000 > cooldown) {
-                sender.sendMessage("Nie tak szybko!");
-                return false;
-            }
+        if (!isCooldownPassed(player.getName(), sender)) {
+            return false;
         }
 
         // Weryfikacja, czy gracz jest na odpowiedniej mapie
-        String world = main.getConfig().getString("RandomTeleport.Location.World");
-        if (!player.getWorld().getName().equals(world))
-            player.sendMessage("Tylko można na mapie: " + world);
+        if (!worldIsAllowedToRandomTeleport(player))
+            return false;
 
         // Zapisywanie konfiguracji do osobnej zmiennej
         int minX = main.getConfig().getInt("RandomTeleport.Location.MinX");
@@ -101,5 +94,34 @@ public class RandomTeleport implements CommandExecutor {
         main.getConfig().addDefault("RandomTeleport.Avoid", getDefaultAvoidMaterial());
         main.getConfig().options().copyDefaults(true);
         main.saveConfig();
+    }
+
+    private boolean isTeleportationActivated(CommandSender sender) {
+        if (!main.getConfig().getBoolean("RandomTeleport.Activate")) {
+            String message = "Random Teleport jest wyłączony!";
+            sender.sendMessage(message);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isCooldownPassed(String name, CommandSender sender) {
+        if (cooldowns.containsKey(name)) {
+            //Jeśli tak, to czy jego cooldown już minął.
+            if (cooldowns.get(name) - System.currentTimeMillis() * 1000 > cooldown) {
+                sender.sendMessage("Nie tak szybko!");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean worldIsAllowedToRandomTeleport(Player player) {
+        String world = main.getConfig().getString("RandomTeleport.Location.World");
+        if (!player.getWorld().getName().equals(world)) {
+            player.sendMessage("Tylko można na mapie: " + world);
+            return false;
+        }
+        return true;
     }
 }
