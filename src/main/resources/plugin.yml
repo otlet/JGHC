@@ -1,6 +1,6 @@
 name: JestemGraczem
 description: Oficjalny plugin serwerow JestemGraczem.pl
-version: '0.2'
+version: '1.0'
 main: com.idkcloud.JestemGraczem.JestemGraczem
 author: otlet
 website: idkcloud.com

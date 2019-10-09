@@ -9,6 +9,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.Objects;
+
 public class JestemGraczem extends JavaPlugin implements Listener {
     public Permission perms;
 
@@ -24,7 +26,7 @@ public class JestemGraczem extends JavaPlugin implements Listener {
         }
 
         // Włączenie dziwnych opcji
-        if (setupPermissions()) getServer().getPluginManager().disablePlugin(this);
+        if (!setupPermissions()) getServer().getPluginManager().disablePlugin(this);
 
         // Dodanie funkcjonalności z paczki DeathSpawn
         this.getCommand("setdeathspawn").setExecutor(new DeathSpawn());
@@ -35,7 +37,6 @@ public class JestemGraczem extends JavaPlugin implements Listener {
 
         // Dodanie RandomTP
         this.getCommand("randomtp").setExecutor(new RandomTeleport());
-
     }
 
     @Override

@@ -15,20 +15,16 @@ public class RandomTeleport implements CommandExecutor {
     private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
 
     public RandomTeleport() {
-        main.getConfig().addDefault("RandomTeleport.Activated", false);
-        main.getConfig().addDefault("RandomTeleport.Location.World", "world");
-        main.getConfig().addDefault("RandomTeleport.Location.MinX", 0);
-        main.getConfig().addDefault("RandomTeleport.Location.MinY", 0);
-        main.getConfig().addDefault("RandomTeleport.Location.MaxX", 0);
-        main.getConfig().addDefault("RandomTeleport.Location.MaxY", 0);
-        main.getConfig().addDefault("RandomTeleport.Cooldown", 600);
-        main.getConfig().addDefault("RandomTeleport.Avoid", getDefaultAvoidMaterial());
-        main.getConfig().options().copyDefaults(true);
-        main.saveConfig();
+        this.generateDefaultConfiguration();
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        if (!main.getConfig().getBoolean("RandomTeleport.Activate")) {
+            String message = "Random Teleport jest wyłączony!";
+            sender.sendMessage(message);
+            return true;
+        }
         if (sender instanceof Player) {
             Player player = (Player) sender;
             String world = main.getConfig().getString("RandomTeleport.Location.World");
@@ -70,5 +66,18 @@ public class RandomTeleport implements CommandExecutor {
         avoid[1] = "lava";
         avoid[2] = "air";
         return avoid;
+    }
+
+    private void generateDefaultConfiguration() {
+        main.getConfig().addDefault("RandomTeleport.Activate", false);
+        main.getConfig().addDefault("RandomTeleport.Location.World", "world");
+        main.getConfig().addDefault("RandomTeleport.Location.MinX", 0);
+        main.getConfig().addDefault("RandomTeleport.Location.MinY", 0);
+        main.getConfig().addDefault("RandomTeleport.Location.MaxX", 0);
+        main.getConfig().addDefault("RandomTeleport.Location.MaxY", 0);
+        main.getConfig().addDefault("RandomTeleport.Cooldown", 600);
+        main.getConfig().addDefault("RandomTeleport.Avoid", getDefaultAvoidMaterial());
+        main.getConfig().options().copyDefaults(true);
+        main.saveConfig();
     }
 }
