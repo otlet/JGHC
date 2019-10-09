@@ -57,8 +57,6 @@ public class RandomTeleport implements CommandExecutor {
         int Y = 255;                                       // Wysokość
         int Z = r.nextInt(maxZ - minZ) + minZ;     // Długość
 
-        main.getLogger().info(String.format("X: %s | Y: %s | Z: %s", X, Y, Z));
-
         // Wykonuj dopóki Y > 0 (czyli wysokość)
         do {
             Location location = new Location(player.getWorld(), X, Y, Z);
@@ -70,6 +68,7 @@ public class RandomTeleport implements CommandExecutor {
                 if (location1up.equals("AIR") && location2up.equals("AIR")) {
                     Location tpLocation = new Location(player.getWorld(), X, Y + 1, Z);
                     cooldowns.put(player.getName(), System.currentTimeMillis() * 1000);
+                    main.getLogger().info(String.format("X: %s | Y: %s | Z: %s", X, Y, Z));
                     player.teleport(tpLocation);
                     return true;
                 }
