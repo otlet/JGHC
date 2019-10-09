@@ -31,21 +31,21 @@ public class RandomTeleport implements CommandExecutor {
             if (player.getWorld().getName().equals(world)) {
 
                 int minX = main.getConfig().getInt("RandomTeleport.Location.MinX");
-                int minY = main.getConfig().getInt("RandomTeleport.Location.MinY");
+                int minY = main.getConfig().getInt("RandomTeleport.Location.MinZ");
                 int maxX = main.getConfig().getInt("RandomTeleport.Location.MaxX");
-                int maxY = main.getConfig().getInt("RandomTeleport.Location.MaxY");
+                int maxY = main.getConfig().getInt("RandomTeleport.Location.MaxZ");
                 List<String> avoid = main.getConfig().getStringList("RandomTeleport.Avoid");
 
                 Random r = new Random();
                 int X = r.nextInt(maxX - minX) + minX;
-                int Y = r.nextInt(maxY - minY) + minY;
-                int Z = 255;
+                int Y = 255;
+                int Z = r.nextInt(maxY - minY) + minY;;
 
-                while (Z > 0) {
+                while (Y > 0) {
                     Location location = new Location(player.getWorld(), X, Y, Z);
                     if (!avoid.contains(location.getBlock().getType().name()))
                         break;
-                    Z--;
+                    Y--;
                 }
 
                 Location location = new Location(player.getWorld(), X, Y, Z);
@@ -72,9 +72,9 @@ public class RandomTeleport implements CommandExecutor {
         main.getConfig().addDefault("RandomTeleport.Activate", false);
         main.getConfig().addDefault("RandomTeleport.Location.World", "world");
         main.getConfig().addDefault("RandomTeleport.Location.MinX", 0);
-        main.getConfig().addDefault("RandomTeleport.Location.MinY", 0);
+        main.getConfig().addDefault("RandomTeleport.Location.MinZ", 0);
         main.getConfig().addDefault("RandomTeleport.Location.MaxX", 0);
-        main.getConfig().addDefault("RandomTeleport.Location.MaxY", 0);
+        main.getConfig().addDefault("RandomTeleport.Location.MaxZ", 0);
         main.getConfig().addDefault("RandomTeleport.Cooldown", 600);
         main.getConfig().addDefault("RandomTeleport.Avoid", getDefaultAvoidMaterial());
         main.getConfig().options().copyDefaults(true);

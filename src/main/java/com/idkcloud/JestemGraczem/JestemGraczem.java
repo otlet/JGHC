@@ -2,7 +2,7 @@ package com.idkcloud.JestemGraczem;
 
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawn;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
-import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
+//import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.event.Listener;
@@ -25,18 +25,18 @@ public class JestemGraczem extends JavaPlugin implements Listener {
             getLogger().info("DEBUG MODE");
         }
 
-        // Włączenie dziwnych opcji
+        // Weryfikacja uprawnień
         if (!setupPermissions()) getServer().getPluginManager().disablePlugin(this);
 
         // Dodanie funkcjonalności z paczki DeathSpawn
         this.getCommand("setdeathspawn").setExecutor(new DeathSpawn());
         getServer().getPluginManager().registerEvents(new DeathSpawnListener(), this);
 
-        // Dodanie Private Cuboid Ficzerów
-        getServer().getPluginManager().registerEvents(new PrivateCuboidListener(), this);
-
         // Dodanie RandomTP
         this.getCommand("randomtp").setExecutor(new RandomTeleport());
+
+        // Dodanie Private Cuboid Ficzerów
+//        getServer().getPluginManager().registerEvents(new PrivateCuboidListener(), this);
     }
 
     @Override
