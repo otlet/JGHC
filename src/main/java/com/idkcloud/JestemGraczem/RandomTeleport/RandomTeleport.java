@@ -31,22 +31,24 @@ public class RandomTeleport implements CommandExecutor {
             if (player.getWorld().getName().equals(world)) {
 
                 int minX = main.getConfig().getInt("RandomTeleport.Location.MinX");
-                int minY = main.getConfig().getInt("RandomTeleport.Location.MinZ");
+                int minZ = main.getConfig().getInt("RandomTeleport.Location.MinZ");
                 int maxX = main.getConfig().getInt("RandomTeleport.Location.MaxX");
-                int maxY = main.getConfig().getInt("RandomTeleport.Location.MaxZ");
+                int maxZ = main.getConfig().getInt("RandomTeleport.Location.MaxZ");
                 List<String> avoid = main.getConfig().getStringList("RandomTeleport.Avoid");
 
                 Random r = new Random();
                 int X = r.nextInt(maxX - minX) + minX;
                 int Y = 255;
-                int Z = r.nextInt(maxY - minY) + minY;;
+                int Z = r.nextInt(maxZ - minZ) + minZ;
 
-                while (Y > 0) {
+                main.getLogger().info(String.format("X: %s | Y: %s | Z: %s", X, Y, Z));
+
+                do {
                     Location location = new Location(player.getWorld(), X, Y, Z);
                     if (!avoid.contains(location.getBlock().getType().name()))
                         break;
                     Y--;
-                }
+                } while (Y > 0);
 
                 Location location = new Location(player.getWorld(), X, Y, Z);
                 player.teleport(location);
