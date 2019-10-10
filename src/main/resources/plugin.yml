@@ -1,15 +1,15 @@
 name: JestemGraczem
 description: Oficjalny plugin serwerow JestemGraczem.pl
-version: '1.0'
+version: '1.0.1'
 main: com.idkcloud.JestemGraczem.JestemGraczem
 author: otlet
 website: idkcloud.com
 api-version: '1.14'
 depend:
-  - WorldEdit
-  - WorldGuard
-  - WorldGuardEvents
   - Vault
+#  - WorldEdit
+#  - WorldGuard
+#  - WorldGuardEvents
 commands:
   setdeathspawn:
     description: Set Death Spawn
@@ -27,9 +27,18 @@ commands:
     permission-message: Nie umiesz w teleportację!
     usage: /randomtp
 permissions:
+  jg.*:
+    description: Daje dostep do wszystkich funkcji pluginu JestemGraczem.pl
+    children:
+      jg.setdeathspawn: true
+      jg.admin: true
+      jg.randomtp: true
+  jg.setdeathspawn:
+    description: Tylko administrator może ustawić twoje miejsce śmierci!
+    default: op
   jg.admin:
     description: Komendy admendy!
     default: op
   jg.randomtp:
     description: Komendy admendy!
-    default: op
+    default: true
