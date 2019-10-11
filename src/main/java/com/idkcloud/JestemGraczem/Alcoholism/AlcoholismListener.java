@@ -1,16 +1,18 @@
 package com.idkcloud.JestemGraczem.Alcoholism;
 
 import com.idkcloud.JestemGraczem.JestemGraczem;
-import com.idkcloud.JestemGraczem.Utils.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.potion.PotionEffectType;
 
 import java.util.Random;
 
+/**
+ * Klasa odpowiadająza za nasłuchiwanie i wykonywanie efektów alkoholu
+ * @since 1.0.1
+ */
 public class AlcoholismListener implements Listener {
     private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
 
@@ -20,6 +22,11 @@ public class AlcoholismListener implements Listener {
 //        onItemConsumeEvent(event);
 //    }
 
+    /**
+     * Metoda wywoływania, gdy gracz konsumuje przedmiot
+     * @param event Instancja eventu przekazywana jako parametr
+     * @since 1.0.1
+     */
     @EventHandler(ignoreCancelled = true)
     public void onItemConsumeEvent(PlayerItemConsumeEvent event) {
         if (!event.getItem().hasItemMeta()) return;
@@ -31,6 +38,12 @@ public class AlcoholismListener implements Listener {
         generatePotionEffects(itemMeta.getDisplayName(), player);
     }
 
+    /**
+     * Metoda, która generuje efekty w potionach.
+     * @param name Potion name
+     * @param player Player instance
+     * @since 1.0.1
+     */
     private void generatePotionEffects(String name, Player player) {
         Random rand = new Random();
         int chance = rand.nextInt(100);
