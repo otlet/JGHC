@@ -24,6 +24,7 @@ public class RandomTeleport implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+        main.getLogger().info(cooldowns.toString());
         // Sprawdzenie, czy RTP jest włączone w konfiguracji
         if (!isTeleportationActivated(sender)) {
             return false;
@@ -112,6 +113,8 @@ public class RandomTeleport implements CommandExecutor {
     private boolean isCooldownPassed(String name, CommandSender sender) {
         if (cooldowns.containsKey(name)) {
             //Jeśli tak, to czy jego cooldown już minął.
+            String tmp = String.format("COOLDOWN: %s | USER COOLDOWN: %s", System.currentTimeMillis() * 1000, cooldowns.get(name));
+            main.getLogger().info(tmp);
             if (cooldowns.get(name) - System.currentTimeMillis() * 1000 > cooldown) {
                 sender.sendMessage("Nie tak szybko!");
                 return false;
