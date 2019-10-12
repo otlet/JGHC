@@ -7,7 +7,10 @@ import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
 import com.idkcloud.JestemGraczem.Weather.Weather;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -57,6 +60,20 @@ public class JestemGraczem extends JavaPlugin implements Listener {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
         perms = rsp.getProvider();
         return perms != null;
+    }
+
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent event) {
+        sendWelcomeMessage(event.getPlayer());
+    }
+
+    private void sendWelcomeMessage(Player player) {
+        String title = "{\"text\":\"&fJestem&cGraczem&f.pl\",\"bold\":true}";
+        String subtitle = "{\"text\":\"Najtrudniejszy serwer Hardcore w Polsce! Powodzenia!\",\"italic\":true}";
+        int fadeIn = 10;
+        int stay = 70;
+        int fadeOut = 20;
+        player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
     }
 
 }
