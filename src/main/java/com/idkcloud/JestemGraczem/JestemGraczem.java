@@ -5,6 +5,7 @@ import com.idkcloud.JestemGraczem.Alcoholism.AlcoholismListener;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawn;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
+import com.idkcloud.JestemGraczem.Weather.Weather;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.RegisteredServiceProvider;
@@ -39,6 +40,9 @@ public class JestemGraczem extends JavaPlugin implements Listener {
 
         // Dodanie RandomTP
         this.getCommand("randomtp").setExecutor(new RandomTeleport());
+
+        // Dodanie taska z pogodą
+        new Weather();
 
         // Dodanie Private Cuboid Ficzerów
 //        getServer().getPluginManager().registerEvents(new PrivateCuboidListener(), this);
