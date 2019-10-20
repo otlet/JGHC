@@ -68,8 +68,8 @@ public class JGHC extends JavaPlugin implements Listener {
     }
 
     private void sendWelcomeMessage(Player player) {
-        String title = "{\"text\":\"&fJestem&cGraczem&f.pl\",\"bold\":true}";
-        String subtitle = "{\"text\":\"Najtrudniejszy serwer Hardcore w Polsce! Powodzenia!\",\"italic\":true}";
+        String title = "JestemGraczem.pl";
+        String subtitle = "Najtrudniejszy serwer Hardcore w Polsce! Powodzenia!";
         int fadeIn = 10;
         int stay = 70;
         int fadeOut = 20;
