@@ -1,6 +1,8 @@
 package com.idkcloud.JestemGraczem.RandomTeleport;
 
-import com.idkcloud.JestemGraczem.JestemGraczem;
+import com.idkcloud.JestemGraczem.JGHC;
+import com.idkcloud.JestemGraczem.Utils.CooldownManager;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,20 +13,21 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class RandomTeleport implements CommandExecutor {
-    private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
-    private int cooldown;
-    private HashMap<String, Long> cooldowns = new HashMap<>();
+    private JGHC main = JGHC.getPlugin(JGHC.class);
+    private final CooldownManager cooldownManager;
 
     public RandomTeleport() {
         this.generateDefaultConfiguration();
-        cooldown = main.getConfig().getInt("RandomTeleport.Cooldown");
+        int cooldown = main.getConfig().getInt("RandomTeleport.Cooldown");
+        cooldownManager = new CooldownManager(cooldown);
     }
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-        main.getLogger().info(cooldowns.toString());
         // Sprawdzenie, czy RTP jest włączone w konfiguracji
         if (!isTeleportationActivated(sender)) {
             return false;
@@ -37,7 +40,7 @@ public class RandomTeleport implements CommandExecutor {
         Player player = (Player) sender;
 
         //Czy gracz już jest w pamięci cooldowna
-        if (!isCooldownPassed(player.getName(), sender)) {
+        if (!isCooldownPassed(player.getUniqueId())) {
             return false;
         }
 
@@ -67,8 +70,7 @@ public class RandomTeleport implements CommandExecutor {
                 String location2up = new Location(player.getWorld(), X, Y + 2, Z).getBlock().getType().name();
                 // Czy dwa bloki wyżej są powietrzem
                 if (location1up.equals("AIR") && location2up.equals("AIR")) {
-                    Location tpLocation = new Location(player.getWorld(), X, Y + 1, Z);
-                    cooldowns.put(player.getName(), System.currentTimeMillis() * 1000);
+                    Location tpLocation = new Location(player.getWorld(), X, Y, Z);
                     main.getLogger().info(String.format("X: %s | Y: %s | Z: %s", X, Y, Z));
                     player.teleport(tpLocation);
                     return true;
@@ -95,7 +97,7 @@ public class RandomTeleport implements CommandExecutor {
         main.getConfig().addDefault("RandomTeleport.Location.MinZ", 0);
         main.getConfig().addDefault("RandomTeleport.Location.MaxX", 0);
         main.getConfig().addDefault("RandomTeleport.Location.MaxZ", 0);
-        main.getConfig().addDefault("RandomTeleport.Cooldown", 600);
+        main.getConfig().addDefault("RandomTeleport.Cooldown", 600); // Wartość w sekundach
         main.getConfig().addDefault("RandomTeleport.Avoid", getDefaultAvoidMaterial());
         main.getConfig().options().copyDefaults(true);
         main.saveConfig();
@@ -110,15 +112,12 @@ public class RandomTeleport implements CommandExecutor {
         return true;
     }
 
-    private boolean isCooldownPassed(String name, CommandSender sender) {
-        if (cooldowns.containsKey(name)) {
-            //Jeśli tak, to czy jego cooldown już minął.
-            String tmp = String.format("COOLDOWN: %s | USER COOLDOWN: %s", System.currentTimeMillis() * 1000, cooldowns.get(name));
-            main.getLogger().info(tmp);
-            if (cooldowns.get(name) - System.currentTimeMillis() * 1000 > cooldown) {
-                sender.sendMessage("Nie tak szybko!");
-                return false;
-            }
+    private boolean isCooldownPassed(UUID senderUUID) {
+        long timeLeft = System.currentTimeMillis() - cooldownManager.getCooldown(senderUUID);
+        if (TimeUnit.MILLISECONDS.toSeconds(timeLeft) >= CooldownManager.DEFAULT_COOLDOWN) {
+            cooldownManager.setCooldown(senderUUID, (int) System.currentTimeMillis());
+        } else {
+            return false;
         }
         return true;
     }

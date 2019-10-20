@@ -1,6 +1,6 @@
 package com.idkcloud.JestemGraczem.Alcoholism;
 
-import com.idkcloud.JestemGraczem.JestemGraczem;
+import com.idkcloud.JestemGraczem.JGHC;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -9,7 +9,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class AlcoholismConfig {
-    private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
+    private JGHC main = JGHC.getPlugin(JGHC.class);
     private File configFile;
     private FileConfiguration Config;
 

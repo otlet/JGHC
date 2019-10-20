@@ -1,14 +1,14 @@
-# JGStandardPlugin
-![GitHub](https://img.shields.io/github/license/otlet/jg-mc-plugin?style=flat-square)
-![GitHub stars](https://img.shields.io/github/stars/otlet/jg-mc-plugin?style=flat-square)
+# JGHC
+![GitHub](https://img.shields.io/github/license/otlet/jghc?style=flat-square)
+![GitHub stars](https://img.shields.io/github/stars/otlet/jghc?style=flat-square)
 ![Discord](https://img.shields.io/discord/529199385863782401?style=flat-square)
 
 
-Official PaperMC.io Minecraft Server plugin, dedicated for mc.JestemGraczem.pl
+Official PaperMC.io Minecraft Server plugin, dedicated for mc.JestemGraczem.pl Hardcore server
 
 ## Installation
 
-Copy JestemGraczem-*.jar into `plugins` folder.
+Copy JGHC-*.jar into `plugins` folder.
 
 ## Usage
 
@@ -17,7 +17,8 @@ Copy JestemGraczem-*.jar into `plugins` folder.
 ## Features
 * Death Spawn - normal spawn after death is boring! Now set new death spawn, ie. in hell!
 * Alcohol - new potions with special effects :)
-* Flying in your own cuboid - in plans
+* Random Teleport - teleport to random location, or die.
+* Flying only in your own cuboid - in plans
 * Custom Mobs - in plans
 
 ## Contributing

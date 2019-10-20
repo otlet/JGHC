@@ -1,10 +1,10 @@
 package com.idkcloud.JestemGraczem.Weather;
 
-import com.idkcloud.JestemGraczem.JestemGraczem;
+import com.idkcloud.JestemGraczem.JGHC;
 import org.bukkit.World;
 
 public class WeatherRunnable implements Runnable {
-    private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
+    private JGHC main = JGHC.getPlugin(JGHC.class);
     private double nightTick = 14000;
     private World world;
 

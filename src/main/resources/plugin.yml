@@ -1,7 +1,7 @@
-name: JestemGraczem
-description: Oficjalny plugin serwerow JestemGraczem.pl
-version: '1.1.1'
-main: com.idkcloud.JestemGraczem.JestemGraczem
+name: JGHC
+description: Oficjalny plugin serwera UltraHardcore JestemGraczem.pl
+version: '1.0.0'
+main: com.idkcloud.JestemGraczem.JGHC
 author: otlet
 website: idkcloud.com
 api-version: '1.14'

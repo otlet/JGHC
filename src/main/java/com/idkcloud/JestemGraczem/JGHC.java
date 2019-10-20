@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 //import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
 
-public class JestemGraczem extends JavaPlugin implements Listener {
+public class JGHC extends JavaPlugin implements Listener {
     public Permission perms;
     public AlcoholismConfig alcoholismConfig;
 

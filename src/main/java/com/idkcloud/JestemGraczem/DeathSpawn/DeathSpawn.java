@@ -1,13 +1,13 @@
 package com.idkcloud.JestemGraczem.DeathSpawn;
 
-import com.idkcloud.JestemGraczem.JestemGraczem;
+import com.idkcloud.JestemGraczem.JGHC;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public class DeathSpawn implements CommandExecutor {
-    private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
+    private JGHC main = JGHC.getPlugin(JGHC.class);
 
     public DeathSpawn() {
         main.getConfig().addDefault("debug", false);

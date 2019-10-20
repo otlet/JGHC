@@ -1,6 +1,6 @@
 package com.idkcloud.JestemGraczem.Alcoholism;
 
-import com.idkcloud.JestemGraczem.JestemGraczem;
+import com.idkcloud.JestemGraczem.JGHC;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -14,7 +14,7 @@ import java.util.Random;
  * @since 1.0.1
  */
 public class AlcoholismListener implements Listener {
-    private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
+    private JGHC main = JGHC.getPlugin(JGHC.class);
 
 //    @EventHandler(ignoreCancelled = true)
 //    public void onConsumeEvent(PlayerItemConsumeEvent event) {

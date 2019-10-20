@@ -1,6 +1,6 @@
 package com.idkcloud.JestemGraczem.DeathSpawn;
 
-import com.idkcloud.JestemGraczem.JestemGraczem;
+import com.idkcloud.JestemGraczem.JGHC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -9,18 +9,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 import java.util.Objects;
-import java.util.Set;
 
 public class DeathSpawnListener implements Listener {
-    private JestemGraczem main = JestemGraczem.getPlugin(JestemGraczem.class);
+    private JGHC main = JGHC.getPlugin(JGHC.class);
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerRespawn(final PlayerRespawnEvent e) {
