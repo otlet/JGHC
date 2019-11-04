@@ -11,8 +11,12 @@ public class WeatherRunnable implements Runnable {
     @Override
     public void run() {
         world = main.getServer().getWorld("world");
-        if (world.getTime() > nightTick) {
-            changeWeather();
+        try {
+            if (world.getTime() > nightTick) {
+                changeWeather();
+            }
+        } catch (NullPointerException m) {
+            main.getLogger().warning(m.getMessage());
         }
     }
 

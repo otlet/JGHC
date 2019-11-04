@@ -29,7 +29,14 @@ public class DeathSpawnListener implements Listener {
         Player player = e.getPlayer();
 
         Scoreboard scoreboard = Objects.requireNonNull(main.getServer().getScoreboardManager()).getMainScoreboard();
-        Score playerScore = Objects.requireNonNull(scoreboard.getObjective("ZGONY")).getScore(player.getName());
+        Score playerScore;
+
+        try {
+            playerScore = scoreboard.getObjective("ZGONY").getScore(player.getName());
+        } catch (NullPointerException m) {
+            main.getLogger().warning(m.getMessage());
+            return;
+        }
 
         if (playerScore.getScore() > 500) {
             Bukkit.getScheduler().runTaskLater(main, () -> {

@@ -68,6 +68,8 @@ public class RandomTeleport implements CommandExecutor {
             if (!avoid.contains(location.getBlock().getType().name())) {
                 String location1up = new Location(player.getWorld(), X, Y + 1, Z).getBlock().getType().name();
                 String location2up = new Location(player.getWorld(), X, Y + 2, Z).getBlock().getType().name();
+                main.getLogger().info(String.format("1: %s | 2: %s", location1up, location2up));
+
                 // Czy dwa bloki wyżej są powietrzem
                 if (location1up.equals("AIR") && location2up.equals("AIR")) {
                     Location tpLocation = new Location(player.getWorld(), X, Y, Z);

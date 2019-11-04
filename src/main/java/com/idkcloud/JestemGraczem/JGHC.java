@@ -7,6 +7,7 @@ import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
 import com.idkcloud.JestemGraczem.Weather.Weather;
 import net.milkbowl.vault.permission.Permission;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -71,9 +72,9 @@ public class JGHC extends JavaPlugin implements Listener {
         String title = "JestemGraczem.pl";
         String subtitle = "Najtrudniejszy serwer Hardcore w Polsce! Powodzenia!";
         int fadeIn = 10;
-        int stay = 70;
         int fadeOut = 20;
-        player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
+        int stay = 70;
+        player.sendTitle(ChatColor.RED + title, ChatColor.WHITE + subtitle, fadeIn, stay, fadeOut);
     }
 
 }
