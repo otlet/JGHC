@@ -18,7 +18,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 //import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
 
 public class JGHC extends JavaPlugin implements Listener {
-    public Permission perms;
     public AlcoholismConfig alcoholismConfig;
 
     @Override
@@ -59,7 +58,7 @@ public class JGHC extends JavaPlugin implements Listener {
 
     private boolean setupPermissions() {
         RegisteredServiceProvider<Permission> rsp = getServer().getServicesManager().getRegistration(Permission.class);
-        perms = rsp.getProvider();
+        Permission perms = rsp.getProvider();
         return perms != null;
     }
 
