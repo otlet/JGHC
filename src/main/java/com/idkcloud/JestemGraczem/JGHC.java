@@ -15,8 +15,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
-//import com.idkcloud.JestemGraczem.PrivateCuboid.PrivateCuboidListener;
-
 public class JGHC extends JavaPlugin implements Listener {
     public AlcoholismConfig alcoholismConfig;
 
@@ -46,9 +44,6 @@ public class JGHC extends JavaPlugin implements Listener {
 
         // Dodanie taska z pogodą
         new Weather();
-
-        // Dodanie Private Cuboid Ficzerów
-//        getServer().getPluginManager().registerEvents(new PrivateCuboidListener(), this);
     }
 
     @Override
