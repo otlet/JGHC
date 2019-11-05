@@ -66,13 +66,15 @@ public class RandomTeleport implements CommandExecutor {
             Location location = new Location(player.getWorld(), X, Y, Z);
             // Jeśli blok nie posiada zakazanego typu (np.: woda, czy lava) to teleportuj go + zapis cooldown
             if (!avoid.contains(location.getBlock().getType().name())) {
-                String location1up = new Location(player.getWorld(), X, Y + 1, Z).getBlock().getType().name();
-                String location2up = new Location(player.getWorld(), X, Y + 2, Z).getBlock().getType().name();
-                main.getLogger().info(String.format("1: %s | 2: %s", location1up, location2up));
+                String[] locationUp = {
+                        new Location(player.getWorld(), X, Y + 1, Z).getBlock().getType().name(),
+                        new Location(player.getWorld(), X, Y + 2, Z).getBlock().getType().name()
+                };
+                main.getLogger().info(String.format("1: %s | 2: %s", locationUp[0], locationUp[1]));
 
                 // Czy dwa bloki wyżej są powietrzem
-                if (location1up.equals("AIR") && location2up.equals("AIR")) {
-                    Location tpLocation = new Location(player.getWorld(), X, Y, Z);
+                if (locationUp[0].equals("AIR") && locationUp[1].equals("AIR")) {
+                    Location tpLocation = new Location(player.getWorld(), X, Y + 1, Z);
                     main.getLogger().info(String.format("X: %s | Y: %s | Z: %s", X, Y, Z));
                     player.teleport(tpLocation);
                     return true;
