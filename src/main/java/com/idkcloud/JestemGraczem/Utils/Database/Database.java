@@ -7,13 +7,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import java.util.logging.Level;
 
 public abstract class Database {
     JGHC plugin;
     Connection connection;
-    // The name of the table we created back in SQLite class.
-    private String table = "table_name";
     public int tokens = 0;
 
     Database(JGHC instance) {
@@ -27,30 +26,27 @@ public abstract class Database {
     void initialize() {
         connection = getSQLConnection();
         try {
-            PreparedStatement ps = connection.prepareStatement("SELECT * FROM " + table + " WHERE player = ?");
+            PreparedStatement ps = connection.prepareStatement("SELECT * FROM tchest_list");
             ResultSet rs = ps.executeQuery();
             close(ps, rs);
-
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, "Unable to retreive connection", ex);
         }
     }
 
-    // These are the methods you can use to get things out of your database. You of course can make new ones to return different things in the database.
-    // This returns the number of people the player killed.
-    public Integer getTokens(String string) {
+    public Integer getTchestList(Player player) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '" + string + "';");
-
+            ps = conn.prepareStatement("SELECT * FROM tchest_items");
+//            ps.setString(1, player.getName().toLowerCase());
+//            ps.setInt(2, tokens);
+//            ps.setInt(3, total);
             rs = ps.executeQuery();
             while (rs.next()) {
-                if (rs.getString("player").equalsIgnoreCase(string.toLowerCase())) { // Tell database to search for the player you sent into the method. e.g getTokens(sam) It will look for sam.
-                    return rs.getInt("kills"); // Return the players ammount of kills. If you wanted to get total (just a random number for an example for you guys) You would change this to total!
-                }
+                player.sendMessage(String.format("%s %s", rs.getInt("id"), rs.getString("name")));
             }
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
@@ -67,23 +63,24 @@ public abstract class Database {
         return 0;
     }
 
-    // Exact same method here, Except as mentioned above i am looking for total!
-    public Integer getTotal(String string) {
+    public boolean getCooldown(UUID uuid) {
         Connection conn = null;
         PreparedStatement ps = null;
         ResultSet rs;
         try {
             conn = getSQLConnection();
-            ps = conn.prepareStatement("SELECT * FROM " + table + " WHERE player = '" + string + "';");
-
+            ps = conn.prepareStatement("SELECT * FROM rtp_cooldown where uuid=?");
+            ps.setString(1, uuid.toString().toLowerCase());
             rs = ps.executeQuery();
+            int i = 0;
             while (rs.next()) {
-                if (rs.getString("player").equalsIgnoreCase(string.toLowerCase())) {
-                    return rs.getInt("total");
-                }
+                plugin.getLogger().info(String.format("%s %s", rs.getString("uuid"), rs.getString("last_time")));
+                i++;
             }
+            plugin.getLogger().info(String.valueOf(i));
         } catch (SQLException ex) {
             plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
+            return false;
         } finally {
             try {
                 if (ps != null)
@@ -94,42 +91,8 @@ public abstract class Database {
                 plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
             }
         }
-        return 0;
+        return true;
     }
-
-    // Now we need methods to save things to the database
-    public void setTokens(Player player, Integer tokens, Integer total) {
-        Connection conn = null;
-        PreparedStatement ps = null;
-        try {
-            conn = getSQLConnection();
-            ps = conn.prepareStatement("REPLACE INTO " + table + " (player,kills,total) VALUES(?,?,?)"); // IMPORTANT. In SQLite class, We made 3 colums. player, Kills, Total.
-            ps.setString(1, player.getName().toLowerCase());                                             // YOU MUST put these into this line!! And depending on how many
-            // colums you put (say you made 5) All 5 need to be in the brackets
-            // Seperated with comma's (,) AND there needs to be the same amount of
-            // question marks in the VALUES brackets. Right now i only have 3 colums
-            // So VALUES (?,?,?) If you had 5 colums VALUES(?,?,?,?,?)
-
-            ps.setInt(2, tokens); // This sets the value in the database. The colums go in order. Player is ID 1, kills is ID 2, Total would be 3 and so on. you can use
-            // setInt, setString and so on. tokens and total are just variables sent in, You can manually send values in as well. p.setInt(2, 10) <-
-            // This would set the players kills instantly to 10. Sorry about the variable names, It sets their kills to 10 i just have the variable called
-            // Tokens from another plugin :/
-            ps.setInt(3, total);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionExecute(), ex);
-        } finally {
-            try {
-                if (ps != null)
-                    ps.close();
-                if (conn != null)
-                    conn.close();
-            } catch (SQLException ex) {
-                plugin.getLogger().log(Level.SEVERE, Errors.sqlConnectionClose(), ex);
-            }
-        }
-    }
-
 
     private void close(PreparedStatement ps, ResultSet rs) {
         try {

@@ -1,6 +1,8 @@
 package com.idkcloud.JestemGraczem.Utils.Database;
 
 import com.idkcloud.JestemGraczem.JGHC;
+import com.idkcloud.JestemGraczem.RandomTeleport.RtpCooldownQuery;
+import com.idkcloud.JestemGraczem.TreasureChest.QueryList;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,28 +14,25 @@ import java.util.logging.Level;
 
 public class SQLite extends Database {
     private String dbname;
+    private QueryList chests;
+    private RtpCooldownQuery rtp_querys;
 
     public SQLite(JGHC instance) {
         super(instance);
-        dbname = plugin.getConfig().getString("SQLite.Filename", "table_name"); // Set the table name here e.g player_kills
+        dbname = plugin.getConfig().getString("SQLite.Filename", "database");
+        chests = new QueryList();
+        rtp_querys = new RtpCooldownQuery();
     }
-
-    private String SQLiteCreateTokensTable = "CREATE TABLE IF NOT EXISTS table_name (" + // make sure to put your table name in here too.
-            "`player` varchar(32) NOT NULL," + // This creates the different colums you will save data too. varchar(32) Is a string, int = integer
-            "`kills` int(11) NOT NULL," +
-            "`total` int(11) NOT NULL," +
-            "PRIMARY KEY (`player`)" +  // This is creating 3 colums Player, Kills, Total. Primary key is what you are going to use as your indexer. Here we want to use player so
-            ");"; // we can search by player, and get kills and total. If you some how were searching kills it would provide total and player.
-
 
     // SQL creation stuff, You can leave the blow stuff untouched.
     public Connection getSQLConnection() {
-        File dataFolder = new File(plugin.getDataFolder(), dbname + ".db");
+        File dataFolder = new File(plugin.getDataFolder(), dbname + ".sqlite");
         if (!dataFolder.exists()) {
             try {
                 dataFolder.createNewFile();
+                plugin.getLogger().warning("Creating new SQLite database");
             } catch (IOException e) {
-                plugin.getLogger().log(Level.SEVERE, "File write error: " + dbname + ".db");
+                plugin.getLogger().log(Level.SEVERE, "File write error: " + dbname + ".sqlite");
             }
         }
         try {
@@ -55,7 +54,10 @@ public class SQLite extends Database {
         connection = getSQLConnection();
         try {
             Statement s = connection.createStatement();
-            s.executeUpdate(SQLiteCreateTokensTable);
+            s.executeUpdate(chests.CreateTreasureChestListTable);
+            s.executeUpdate(chests.CreateTreasureChestItemTable);
+            s.executeUpdate(chests.CreateTreasureChestCooldownTable);
+            s.executeUpdate(rtp_querys.CreateRtpCooldownTable);
             s.close();
         } catch (SQLException e) {
             e.printStackTrace();

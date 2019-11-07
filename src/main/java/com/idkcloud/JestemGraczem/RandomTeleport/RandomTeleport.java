@@ -2,6 +2,8 @@ package com.idkcloud.JestemGraczem.RandomTeleport;
 
 import com.idkcloud.JestemGraczem.JGHC;
 import com.idkcloud.JestemGraczem.Utils.CooldownManager;
+import com.idkcloud.JestemGraczem.Utils.Database.Database;
+import com.idkcloud.JestemGraczem.Utils.Database.SQLite;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
@@ -117,6 +119,8 @@ public class RandomTeleport implements CommandExecutor {
     }
 
     private boolean isCooldownPassed(UUID senderUUID) {
+        Database db = new SQLite(main);
+        db.getCooldown(senderUUID);
         long timeLeft = System.currentTimeMillis() - cooldownManager.getCooldown(senderUUID);
         if (TimeUnit.MILLISECONDS.toSeconds(timeLeft) >= CooldownManager.DEFAULT_COOLDOWN) {
             cooldownManager.setCooldown(senderUUID, (int) System.currentTimeMillis());
