@@ -2,7 +2,7 @@
 ![GitHub](https://img.shields.io/github/license/otlet/jghc?style=flat-square)
 ![GitHub stars](https://img.shields.io/github/stars/otlet/jghc?style=flat-square)
 ![Discord](https://img.shields.io/discord/529199385863782401?style=flat-square)
-
+[![Actions Status](https://github.com/otlet/JGHC/workflows/Java%20CI/badge.svg)](https://github.com/otlet/JGHC/actions)
 
 Official PaperMC.io Minecraft Server plugin, dedicated for mc.JestemGraczem.pl Hardcore server
 
