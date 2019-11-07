@@ -5,6 +5,8 @@ import com.idkcloud.JestemGraczem.Alcoholism.AlcoholismListener;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawn;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
+import com.idkcloud.JestemGraczem.Utils.Database.Database;
+import com.idkcloud.JestemGraczem.Utils.Database.SQLite;
 import com.idkcloud.JestemGraczem.Weather.Weather;
 import net.milkbowl.vault.permission.Permission;
 import org.bukkit.ChatColor;
@@ -17,11 +19,16 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class JGHC extends JavaPlugin implements Listener {
     public AlcoholismConfig alcoholismConfig;
+    private Database db;
 
     @Override
     public void onEnable() {
         // Rejestracja pluginu
         getServer().getPluginManager().registerEvents(this, this);
+
+        // Database <3
+        this.db = new SQLite(this);
+        this.db.load();
 
         // Tryb debugowania, może kiedyś
         if (getConfig().getBoolean("debug")) {
@@ -69,6 +76,10 @@ public class JGHC extends JavaPlugin implements Listener {
         int fadeOut = 20;
         int stay = 70;
         player.sendTitle(ChatColor.RED + title, ChatColor.WHITE + subtitle, fadeIn, stay, fadeOut);
+    }
+
+    public Database getRDatabase() {
+        return this.db;
     }
 
 }

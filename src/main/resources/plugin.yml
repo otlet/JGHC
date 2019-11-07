@@ -40,5 +40,5 @@ permissions:
     description: Komendy admendy!
     default: op
   jg.randomtp:
-    description: Komendy admendy!
+    description: Randomowa teleportacja!!
     default: true
