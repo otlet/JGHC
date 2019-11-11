@@ -4,6 +4,8 @@ import com.idkcloud.JestemGraczem.Alcoholism.AlcoholismConfig;
 import com.idkcloud.JestemGraczem.Alcoholism.AlcoholismListener;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawn;
 import com.idkcloud.JestemGraczem.DeathSpawn.DeathSpawnListener;
+import com.idkcloud.JestemGraczem.Notify.Notify;
+import com.idkcloud.JestemGraczem.Notify.NotifyScheduler;
 import com.idkcloud.JestemGraczem.RandomTeleport.RandomTeleport;
 import com.idkcloud.JestemGraczem.Utils.Database.Database;
 import com.idkcloud.JestemGraczem.Utils.Database.SQLite;
@@ -51,6 +53,8 @@ public class JGHC extends JavaPlugin implements Listener {
 
         // Dodanie taska z pogodą
         new Weather();
+        Notify notify = new Notify();
+        notify.runScheduler();
     }
 
     @Override

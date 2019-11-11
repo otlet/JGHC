@@ -1,6 +1,6 @@
 name: JGHC
 description: Oficjalny plugin serwera UltraHardcore JestemGraczem.pl
-version: '1.0.1a'
+version: '1.0.2'
 main: com.idkcloud.JestemGraczem.JGHC
 author: otlet
 website: idkcloud.com
